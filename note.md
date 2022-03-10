@@ -100,15 +100,21 @@ hibernate.hbm2ddl.auto
 |insertable,</br> updateable|등록, 변경 가능 여부|TURE|
 |nullable(DDL)|null 값의 허용 여부를 설정한다 false로 설정하면 DDL 생성 시에 NOT NULL 제약 조건이 붙는다.||
 |unique(DDL)|@Table의 uniqueConstraints와 같지만 한 컬럼에 간단히 유니크 제약조건을 걸 때 사용한다.||
-|columnDefinition(DDL)|데이터베이스 컬럼 정보를 직접 줄 수 있다. </br> ex)varchar(100) default 'EMPTY'|필드의 자바 타입과 방언 정보를 사용해|
+|columnDefinition(DDL)|데이터베이스 컬럼 정보를 직접 줄 수 있다. </br> ex)varchar(100) default 'EMPTY'|필드의 자바 타입과 방언 정보를 사용|
 |length(DDL)|문자 같이 제약조건, String 타입에만 사용한다.|255|
-|precision,</br> scale(DDL)|BigDeciamal 타입에서 사용한다.(BigInteger도 사용할 수 있다.)|precision=19,|
+|precision,</br> scale(DDL)|BigInteger, BigDecimal 타입에서 사용, 각각 소수점 포함 자리수, 소수의 자리수를 의미.|precision=19,|
 
+#### @Enumerated
+자바 enum 타입을 매핑할 때 사용
+주의! ORDINAL 사용 X -> 추후 enum 값 추가 시 데이터 꼬일 수 있다.
+|속성|설명|기본값|
+|:------|:-----|:-----|
+|value|EnumType.ORDINAL : enum 순서를 데이터 베이스에 저장 </br> EnumType.STRING: enum 이름을 데이터베이스에 저장|EnumType.ORDINAL|
 
-
+### 4. 기본 키 매핑
  
 
-
+### 5. 실전 예제 1 - 요구사항 분석과 기본 매핑
 
 
 

@@ -193,7 +193,7 @@ public class Member{
 #### TABLE 전략
 * 키 생성 전용 테이블을 하나 만들어서 데이터베이스 시퀀스를 흉내내는 전략
 * 장점: 모든 데이터베이스에 적용 가능
-* 단점: 성능
+* 단점: 성능 (Table 전략은 잘 사용하지 않는다)
 
 #### TABLE 전략 - 매핑
 ```java
@@ -217,7 +217,25 @@ create table MY_SEQUENCES(
 ) 
 ```
 
+#### @TableGenerator - 속성
+|속성|설명|기본값|
+|:------|:-----|:-----|
+|name|식별자 생성기 이름|필수|
+|sequenceName|데이터베이스에 등록되어 있는 시퀀스 이름|hibernate_sequence|
+|pkColumnName|시퀀스 컬럼명|sequence_name|
+|valueColumnNa|시퀀스 값 컬럼명|next_val|
+|pkColumnValue|키로 사용할 값 이름|엔티티 이름|
+|initialValue|초기 값, 마지막으로 생성된 값이 기준이다.|0|
+|allocationSize|시퀀스 한 번 호출에 증가하는 수(성능 최적화에 사용 됨)50|
+|catalog, schema|데이터베이스 catalog, schema 이름||
+|uniqueConstraints(DDL)|유니크 제약 조건을 지정할 수 있다.||
 
+
+### 권장하는 식별자 전략
+* 기본 키 제약 조건: null 아님, 유일, 변하면 안된다.
+* 미래까지 이 조건을 만족하는 자연키는 찾기 어렵다. 대리키(대체키)를 사용하자.
+* 예를 들어 주민등록번호도 기본 키로 적절하지 않다.
+* 권장: Long형 + 대체키 + 키 생성전략 사용
 
 ### 5. 실전 예제 1 - 요구사항 분석과 기본 매핑
 

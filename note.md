@@ -20,9 +20,9 @@
 * JPA를 사용해서 테이블과 매핑할 클래스는 @Entity 필수
 
 * 주의
- * 기본 생성자 필수(파라미터가 없는 public 또는 protected 생성자)
- * final 클래스, enum, interface, inner 클러스 사용 X
- * 저장할 필드에 final 사용 X
+  * 기본 생성자 필수(파라미터가 없는 public 또는 protected 생성자)
+  * final 클래스, enum, interface, inner 클러스 사용 X
+  * 저장할 필드에 final 사용 X
 
 
 

@@ -156,7 +156,39 @@ private Long id;
 * AUTO_INCREMENT는 데이터베이스에 INSERT SQL을 실행한 이후에 ID 값을 알 수 있음
 * IDENTITY 전략은 em.persist() 시점에 즉시 INSERT SQL 실행하고 DB에서 식별자를 조회
 
-#### SEQUENCE 전략 - 
+#### IDENTITY 전략 - 매핑
+```java
+@Id @GeneratedValue(Strategy = GenerationType.IDENTITY)
+private Long id;
+```
+
+#### SEQUENCE 전략 - 특징
+* 데이터베이스 시퀀스는 유일한 값을 수선대로 생성하는 특별한 데이터베이스 오브젝트(예: 오라클 시퀀스)
+* 오라클, PostgreSQL, DB2, H2 데이터베이스에서 사용
+
+#### SEQUENCE 전략 - 매핑
+```java
+@Entity
+@SequenceGenerator(
+      name = "MEMEBER_SEQ_GENERATOR",
+      sequenceName = "MEMBER_SEQ", //매핑할 데이터베이스 시퀀스 이름
+      initialValue = 1, allocationSize = 1)
+public class Member{
+  @Id
+  @GeneratedValue(Strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
+  private Long id;
+} 
+```
+#### SEQUENCE - @SequenceGenerator
+* 주의: allocationSize 기본값 = 50
+|속성|설명|기본값|
+|:------|:-----|:-----|
+|name|식별자 생성기 이름|필수|
+|sequenceName|데이터베이스에 등록되어 있는 시퀀스 이름|hibernate_sequence|
+|initialValue|DDL 생성 시에만 사용 됨, 시퀀스 DDL을 생성할 때 처음 1 시작하는 수를 지정한다.|1|
+|allocationSize|시퀀스 한 번 호출에 증가하는 수(성능 최적화에 사용 됨)</br>데이터베이스 시퀀스 값이 하나씩 증가하도록 설정되어 있으면 이 값을 반드시 1로 설정해야 한다.|50|
+|catalog,schema|데이터베이스 catalog, schema 이름||
+
 
 
 ### 5. 실전 예제 1 - 요구사항 분석과 기본 매핑

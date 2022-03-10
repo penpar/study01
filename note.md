@@ -71,9 +71,15 @@ hibernate.hbm2ddl.auto
 * 테스트 서버는 update 또는 validate
 * 스테이징과 운영 서버는 validate 또는 none
 
-
-
-
+### DDL 생성 기능
+* 제약조건 추가: 회원 이름은 필수, 10자 초과x
+ * @Column(nullable = false, length = 10)
+* 유니크 제약조건 추가
+```java
+name 속성 
+@Table(uniqueConstraints = {@UniqueConstraint(name = "NAME_AGE_UNIQUE", columnNames = {"NAME", "AGE"})})
+```
+* DDL 생성 기능은 DDL을 자동 생성할 때만 사용되고  JPA의 실행 로직에는 영향을 주지 않는다.
 
 
 

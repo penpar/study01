@@ -15,7 +15,7 @@
 * 연관관계 매핑: @ManyToOne, @JoinColumn
 
 
-#### @Entity
+### @Entity
 * @Entity가 붙은 클래스는 JPA가 관리, 엔티티라 한다.
 * JPA를 사용해서 테이블과 매핑할 클래스는 @Entity 필수
 
@@ -25,7 +25,7 @@
   * 저장할 필드에 final 사용 X
 
 
-#### @Table은 엔티티와 매핑할 테이블 지정
+### @Table은 엔티티와 매핑할 테이블 지정
 |속성|기능|기본값|
 |:------|:-----|:-----|
 |name|매핑할 테이블 이름|엔티티 이름을 사용|
@@ -37,10 +37,6 @@
 name 속성 
 @Table(name = "MBR")
 public class Member{
-  
-  @Id
-  private Long id;
-  private String name;
 }
 ```
 쿼라 실행 시 Meber 테이블을 조회하지 않고 name 속성으로 지정한 MBR 테이블을 조회한다.
@@ -71,7 +67,7 @@ hibernate.hbm2ddl.auto
 * 테스트 서버는 update 또는 validate
 * 스테이징과 운영 서버는 validate 또는 none
 
-#### DDL 생성 기능
+### DDL 생성 기능
 * 제약조건 추가: 회원 이름은 필수, 10자 초과x
  * @Column(nullable = false, length = 10)
 * 유니크 제약조건 추가
@@ -83,7 +79,7 @@ name 속성
 
 ### 3. 필드와 컬럼 매핑
 
-#### 매핑 어노테이션 정리
+### 매핑 어노테이션 정리
 hibernate.hbm2ddl.auto
 |옵션|설명|
 |:------|:-----|
@@ -93,7 +89,7 @@ hibernate.hbm2ddl.auto
 |@Lob|BLOB, CLOB 매핑|
 |@Transient|특정 필드를 컬럼에|
 
-#### @Column
+### @Column
 |속성|설명|기본값|
 |:------|:-----|:-----|
 |name|필드와 매핑할 테이블의 컬럼 이름|객체의 필드 이름|
@@ -104,21 +100,64 @@ hibernate.hbm2ddl.auto
 |length(DDL)|문자 같이 제약조건, String 타입에만 사용한다.|255|
 |precision,</br> scale(DDL)|BigInteger, BigDecimal 타입에서 사용, 각각 소수점 포함 자리수, 소수의 자리수를 의미.|precision=19,|
 
-#### @Enumerated
+### @Enumerated
 자바 enum 타입을 매핑할 때 사용
 주의! ORDINAL 사용 X -> 추후 enum 값 추가 시 데이터 꼬일 수 있다.
 |속성|설명|기본값|
 |:------|:-----|:-----|
 |value|EnumType.ORDINAL : enum 순서를 데이터 베이스에 저장 </br> EnumType.STRING: enum 이름을 데이터베이스에 저장|EnumType.ORDINAL|
 
-#### @Temporal
+### @Temporal
 날짜 타입(java.util.Data, java.util.Calendar)을 매핑할 때 사용
 참고: LocalDate, LocalDateTime을 사용할 때는 생략 가능(최신 하이버네이트 지원 -> 최신버전 사용 중이면 Temporal 사용안해도 됨)
 |속성|설명|기본값|
 |:------|:-----|:-----|
-|value|TemporalType.DATE: 날짜, 데이터베이스 date 타입과 매핑(예:2013-10-11) </br>TemporalType.TIME:  시간, 데이터베이스 time 타입과 매핑(예: 11:11:11)</br>TemporalType.TIMESTAMP: 날짜와 시간, 데이터베이스 timestamp 타입과 매핑(예: 2013-10-11 11:11:11)|:-----|
+|value|TemporalType.DATE: 날짜, 데이터베이스 date 타입과 매핑(예:2013-10-11) </br>TemporalType.TIME:  시간, 데이터베이스 time 타입과 매핑(예: 11:11:11)</br>TemporalType.TIMESTAMP: 날짜와 시간, 데이터베이스 timestamp 타입과 매핑(예: 2013-10-11 11:11:11)||
+
+### @Lob
+데이터베이스 BLOB, CLOB 타입과 매핑
+* @Lob에는 지정할 수 있는 속성이 없다.
+* 매핑하는 필드 타입이 문자면 CLOB 매핑, 나머지는 BLOB 매핑
+ * CLOB: String, char[], java.sql.CLOB
+ * BLOB: byte[],java.sql.BLOB 
+
+### @Transient
+* 필드 매핑 X
+* 데이터베이스에 저장 X, 조회 X
+* 주로 메모리상에서만 임시로 어떤 값을 보관하고 싶을 때 사용
+```java
+@Transient
+private Integer temp;
+```
+
 ### 4. 기본 키 매핑
- 
+### 기본 키 매핑 어노테이션
+* @Id
+* @GeneratedValue
+```java
+@Id @GeneratedValue(Strategy = GenerationType.AUTO)
+private Long id;
+```
+
+### 기본 키 매핑 방법
+* 직접 할당: @Id만  사용
+* 자동 생성: @GeneratedValue
+ * IDENTITY: 데이터베이스에 위임, MYSQL
+ * SEQUENCE: 데이터베이스 시퀀스 오브젝트 사용, ORACLE
+  * @SequenceGenerator 필요
+ * TABLE: 키 생성용 테이블 사용, 모든 DB에서 사용
+  * @TableGenerator 필요
+ * AUTO: 방언에 따라 자동 지정, 기본값     
+
+#### IDENTITY 전략 - 특징
+* 기본 키 생성을 데이터베이스 위임
+* 주로 MySQL, PostgreSQL, SQL Server, DB2에서 사용(예: MYSQL의 AUTO_INCREMENT)
+* JPA는 보통 트랜잭션 커밋 시점에 INSERTSQL 실행
+* AUTO_INCREMENT는 데이터베이스에 INSERT SQL을 실행한 이후에 ID 값을 알 수 있음
+* IDENTITY 전략은 em.persist() 시점에 즉시 INSERT SQL 실행하고 DB에서 식별자를 조회
+
+#### SEQUENCE 전략 - 
+
 
 ### 5. 실전 예제 1 - 요구사항 분석과 기본 매핑
 

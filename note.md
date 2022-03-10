@@ -35,6 +35,7 @@
 |uniqueConstraints(DDL)|DDL 생성 시에 유니크 제약 조건 생성||
 
 ```java
+## name 속성 
 @Table(name = "MBR")
 public class Member{
   

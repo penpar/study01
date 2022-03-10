@@ -111,6 +111,12 @@ hibernate.hbm2ddl.auto
 |:------|:-----|:-----|
 |value|EnumType.ORDINAL : enum 순서를 데이터 베이스에 저장 </br> EnumType.STRING: enum 이름을 데이터베이스에 저장|EnumType.ORDINAL|
 
+#### @Temporal
+날짜 타입(java.util.Data, java.util.Calendar)을 매핑할 때 사용
+참고: LocalDate, LocalDateTime을 사용할 때는 생략 가능(최신 하이버네이트 지원 -> 최신버전 사용 중이면 Temporal 사용안해도 됨)
+|속성|설명|기본값|
+|:------|:-----|:-----|
+|value|TemporalType.DATE: 날짜, 데이터베이스 date 타입과 매핑(예:2013-10-11) </br>TemporalType.TIME:  시간, 데이터베이스 time 타입과 매핑(예: 11:11:11)</br>TemporalType.TIMESTAMP: 날짜와 시간, 데이터베이스 timestamp 타입과 매핑(예: 2013-10-11 11:11:11)|:-----|
 ### 4. 기본 키 매핑
  
 

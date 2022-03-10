@@ -29,19 +29,21 @@
 # @Table은 엔티티와 매핑할 테이블 지정
 |속성|기능|기본값|
 |:------|:-----|:-----|
-|테스트1|테스트2|테스트3|
-|테스트1|테스트2|테스트3|
-|테스트1|테스트2|테스트3|
+|name|매핑할 테이블 이름|엔티티 이름을 사용|
+|catalog|데이터베이스 catalog 매핑||
+|schema|데이터베이스 schema||
+|uniqueConstraints(DDL)|DDL 생성 시에 유니크 제약 조건 생성||
 
 ```java
 @Table(name = "MBR")
 public class Member{
- @Id
- private Long id;
- private String name;
+  
+  @Id
+  private Long id;
+  private String name;
 }
 ```
-
+쿼라 실행 시 Meber 테이블을 조회하지 않고 name 속성으로 지정한 MBR 테이블을 조회한다.
 
 
 

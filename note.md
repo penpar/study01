@@ -64,7 +64,7 @@ hibernate.hbm2ddl.auto
 |none|사용하지 않음|
 
 ### 데이터베이스 스키마 자동 생성 - 주의
-* * 운영 장비에는 절대 create, create-drop, update 사용하면 안된다. *
+* **운영 장비에는 절대 create, create-drop, update 사용하면 안된다.**
 * 개발 초기 단계는 create 또는 update
 * 테스트 서버는 update 또는 validate
 * 스테이징과 운영 서버는 validate 또는 none

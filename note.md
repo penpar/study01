@@ -196,13 +196,6 @@ public class Member{
 * 단점: 성능
 
 #### TABLE 전략 - 매핑
-```DATABASE
-create table MY_SEQUENCES(
- sequence_name varchar(255) not null,
- next_val bigint,
- primary key(sequence_name)
-) 
-```
 ```java
 @Entity
 @TableGenerator(
@@ -214,6 +207,14 @@ public class Member{
   @GeneratedValue(Strategy = GenerationType.TABLE, generator = "MEMBER_SEQ_GENERATOR")
   private Long id;
 } 
+```
+아래 테이블이 생성된다.
+```mysql
+create table MY_SEQUENCES(
+ sequence_name varchar(255) not null,
+ next_val bigint,
+ primary key(sequence_name)
+) 
 ```
 
 

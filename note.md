@@ -33,6 +33,14 @@
 |테스트1|테스트2|테스트3|
 |테스트1|테스트2|테스트3|
 
+```java
+@Table(name = "MBR")
+public class Member{
+ @Id
+ private Long id;
+ private String name;
+}
+```
 
 
 

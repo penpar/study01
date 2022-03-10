@@ -88,13 +88,21 @@ hibernate.hbm2ddl.auto
 |옵션|설명|
 |:------|:-----|
 |@Colum|컬럼 매핑|
-|@Colum|컬럼 매핑|
-|@Colum|컬럼 매핑|
-|@Colum|컬럼 매핑|
-|@Colum|컬럼 매핑|
+|@Temporal|날짜 타입 매핑|
+|@Enumerated|enum 타입 매핑|
+|@Lob|BLOB, CLOB 매핑|
+|@Transient|특정 필드를 컬럼에|
 
-
-
+#### @Column
+|속성|설명|기본값|
+|:------|:-----|:-----|
+|name|필드와 매핑할 테이블의 컬럼 이름|객체의 필드 이름|
+|insertable,</br> updateable|등록, 변경 가능 여부|TURE|
+|nullable(DDL)|null 값의 허용 여부를 설정한다 false로 설정하면 DDL 생성 시에 NOT NULL 제약 조건이 붙는다.||
+|unique(DDL)|@Table의 uniqueConstraints와 같지만 한 컬럼에 간단히 유니크 제약조건을 걸 때 사용한다.||
+|columnDefinition(DDL)|데이터베이스 컬럼 정보를 직접 줄 수 있다. </br> ex)varchar(100) default 'EMPTY'|필드의 자바 타입과 방언 정보를 사용해|
+|length(DDL)|문자 같이 제약조건, String 타입에만 사용한다.|255|
+|precision,</br> scale(DDL)|BigDeciamal 타입에서 사용한다.(BigInteger도 사용할 수 있다.)|precision=19,|
 
 
 

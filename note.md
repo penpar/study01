@@ -53,6 +53,7 @@ public class Member{
 * 생성된 DDL은 운영서버에서는 사용하지 않거나, 적절히 다듬은 후 사용
 (Local 실행 시 테이블이 없어도 자동으로 생성해 준다.)
 
+
 ### 데이터베이스 스키마 자동생성 - 속성
 hibernate.hbm2ddl.auto
 |옵션|설명|
@@ -61,7 +62,8 @@ hibernate.hbm2ddl.auto
 |create-drop|create와 같으나 종료시점에 테이블 DROP|
 |update|변경분만 반영(운영DB에는 사용하면 안 됨)|
 |vaildate|앤티티와 테이블이 정상 매핑되었는지만 확인|
-|none|사용하지 않음|
+|none|사용하지 않음|   
+
 
 ### 데이터베이스 스키마 자동 생성 - 주의
 * **운영 장비에는 절대 create, create-drop, update 사용하면 안된다.**
